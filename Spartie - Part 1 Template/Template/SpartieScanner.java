@@ -124,7 +124,7 @@ public class SpartieScanner {
         if (nextCharacter == '<') {
             if (examine('=')) {
                 type = TokenType.LESS_EQUAL;
-                current++;
+                //current++;
             } else {
                 type = TokenType.LESS_THAN;
             }
@@ -133,7 +133,7 @@ public class SpartieScanner {
         if (nextCharacter == '>') {
             if (examine('=')) {
                 type = TokenType.GREATER_EQUAL;
-                current++;
+                //current++;
             } else {
                 type = TokenType.GREATER_THAN;
             }
@@ -142,7 +142,7 @@ public class SpartieScanner {
         if (nextCharacter == '=') {
             if (examine('=')) {
                 type = TokenType.EQUIVALENT;
-                current++;
+                //current++;
             } else {
                 type = TokenType.ASSIGN;
             }
@@ -169,7 +169,7 @@ public class SpartieScanner {
                 while (!isAtEnd() && source.charAt(current) != '\n') {
                     current++;
                 }
-                line++;
+                //line++;
                 type = TokenType.IGNORE;
             } else type = TokenType.DIVIDE;
         }
@@ -207,7 +207,6 @@ public class SpartieScanner {
         return new Token(TokenType.STRING, builder.toString(), line);
     }
 
-    // TODO: Complete implementation
     private Token getNumericToken() {
         // Hint: Follow similar idea of String, but in this case if it is a digit
         // You should only allow one period in your scanner
