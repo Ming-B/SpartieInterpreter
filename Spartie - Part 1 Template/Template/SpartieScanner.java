@@ -124,7 +124,6 @@ public class SpartieScanner {
         if (nextCharacter == '<') {
             if (examine('=')) {
                 type = TokenType.LESS_EQUAL;
-                //current++;
             } else {
                 type = TokenType.LESS_THAN;
             }
@@ -133,7 +132,6 @@ public class SpartieScanner {
         if (nextCharacter == '>') {
             if (examine('=')) {
                 type = TokenType.GREATER_EQUAL;
-                //current++;
             } else {
                 type = TokenType.GREATER_THAN;
             }
@@ -142,7 +140,6 @@ public class SpartieScanner {
         if (nextCharacter == '=') {
             if (examine('=')) {
                 type = TokenType.EQUIVALENT;
-                //current++;
             } else {
                 type = TokenType.ASSIGN;
             }
@@ -169,7 +166,6 @@ public class SpartieScanner {
                 while (!isAtEnd() && source.charAt(current) != '\n') {
                     current++;
                 }
-                //line++;
                 type = TokenType.IGNORE;
             } else type = TokenType.DIVIDE;
         }
@@ -184,6 +180,7 @@ public class SpartieScanner {
     private Token getStringToken() {
         // Hint: Check if you have a double quote, then keep reading until you hit another double quote
         // But, if you do not hit another double quote, you should report an error
+        char nextCharacter = source.charAt(current);
         start = current;
         StringBuilder builder = new StringBuilder();
 
@@ -236,20 +233,21 @@ public class SpartieScanner {
     private Token getIdentifierOrReservedWord() {
         // Hint: Assume first it is an identifier and once you capture it, then check if it is a reserved word.
         start = current;
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(); //string builder to build out the text for building out a new token
 
-        if (!isAlpha(source.charAt(current))) {
+        //if the source string is not an alphabet letter, it is not an identifier or reserved word
+        if(!isAlpha(source.charAt(current))) {
             return null;
         }
 
-        while (!isAtEnd() && (isAlpha(source.charAt(current)) || isDigit(source.charAt(current)))) {
+        while (!isAtEnd() && (isAlpha(source.charAt(current)))) {
             builder.append(source.charAt(current));
             current++;
         }
 
         String text = builder.toString();
 
-        TokenType type = keywords.getOrDefault(text, TokenType.IDENTIFIER);
+        TokenType type = keywords.getOrDefault(text, TokenType.IDENTIFIER); //checks if text
 
         return new Token(type, text, line);
     }
